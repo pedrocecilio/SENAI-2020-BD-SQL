@@ -38,7 +38,7 @@ SELECT * FROM Estilos;
 SELECT * FROM Artista;
 SELECT * FROM Albuns;
 SELECT * FROM TiposUsuario;
-SELECT * FROM Usuarios;
+SELECT * FROM Usuarios;  
 
 INSERT INTO Estilos (Nome)
 VALUES ('Trap'),('Rap'),('Sertanjo'), ('Rock'), ('Pagode');
@@ -64,6 +64,18 @@ UPDATE Albuns
 Set Visualizacao = 4500000
 WHERE IdArtista = 1;
 
+
+
+CREATE VIEW VWalbuns AS
+SELECT IdAlbum AS CodigoAlbum,
+	Nome,
+	DataLancamento,
+	QtdMinutos AS Duracao,
+	Visualizacao
+FROM Albuns 
+
+SELECT * FROM Albuns;
+SELECT * FROM VWalbuns;
 
 
 	   
