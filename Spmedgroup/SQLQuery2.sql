@@ -17,4 +17,4 @@ VALUES	('Acupuntura'),
 		('Radioterapia'),
 		('Urologia'),
 		('Pediatria'),
-		('Psiquiatria'),
+		('Psiquiatria');
