@@ -22,6 +22,11 @@ namespace senai.Filmes.WebApi.Repositories
         /// </summary>
         private string StringConexao = "Data Source= DEV21\\SQLEXPRESS; initial catalog=Filmes_manha; user Id=sa; pwd=sa@132;";
 
+        public void Cadastrar(GeneroDomain genero)
+        {
+            using 
+        }
+
         /// <summary>
         /// Lista todos os gêneros
         /// </summary>
@@ -74,31 +79,8 @@ namespace senai.Filmes.WebApi.Repositories
 
 
 
-        public GeneroDomain Adicionar()
-        {
-
-            // Declara a SqlConnection passando a string de conexão
-            using (SqlConnection con = new SqlConnection(StringConexao))
-            {
-                // Declara a instrução a ser executada
-                string query = "UPDATE Generos, SET Nome = Ação, WHERE IdGeneros = 1";
-
-                // Abre a conexão com o banco de dados
-                con.Open();
-
-                // Declara o SqlCommand passando o comando a ser executado e a conexão
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-
-
-                    // Adiciona o genero criado à tabela generos
-                    generos.Add(genero);
-                }
-            }
-        }
-
-            // Retorna a lista de generos
-            return generos;
+       
+         
     }
 }
 

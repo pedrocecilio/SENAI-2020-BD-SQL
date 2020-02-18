@@ -48,5 +48,12 @@ namespace senai.Filmes.WebApi.Controllers
             // Faz a chamada para o método .Listar();
             return _generoRepository.Listar();
         }
+
+        [HttpPost]
+        public ActionResult
+        {
+
+
+        }
     }
 }
