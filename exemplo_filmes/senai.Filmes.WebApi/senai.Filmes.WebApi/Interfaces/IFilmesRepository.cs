@@ -11,9 +11,13 @@ namespace senai.Filmes.WebApi.Interfaces
 
         List<FilmeDomain> Listar();
 
-        GeneroDomain SearchbyId(int id);
+        FilmeDomain SearchbyId(int id);
 
+        void Register(FilmeDomain filme);
 
+        void UpdateUrl(int id, FilmeDomain filme);
+
+        void Delete(int id);
 
 
 

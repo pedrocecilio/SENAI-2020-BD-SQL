@@ -31,12 +31,72 @@ namespace senai.Filmes.WebApi.Controllers
             return _filmeRepository.Listar();
         }
 
-        [HttpGet("{id}"]
+        [HttpGet("{id}")]
         public IActionResult SearchbyId(int id)
         {
             FilmeDomain filmeDesejado = _filmeRepository.SearchbyId(id);
 
-            if(filmeDesejado == null)
+            if (filmeDesejado == null)
+            {
+                return NotFound("Nenhum gênero encontrado");
+            }
+
+            return Ok(filmeDesejado);
         }
+
+        [HttpPost]
+        public IActionResult Register(FilmeDomain novoFilme)
+        {
+            _filmeRepository.Register(novoFilme);
+
+            return StatusCode(201);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateUrl(int id, FilmeDomain filmeAtualizado)
+        {
+
+            FilmeDomain filmeReferencia = _filmeRepository.SearchbyId(id);
+
+            if (filmeReferencia == null)
+            {
+                return NotFound
+                    (
+                        new
+                        {
+                            mensagem = "Gênero não Encontrado",
+                            erro = true
+                        }
+
+                    );
+            }
+
+            try
+            {
+
+                _filmeRepository.UpdateUrl(id, filmeAtualizado);
+
+                return NoContent();
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
+
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _filmeRepository.Delete(id);
+
+            return Ok("Gênero Deletado");
+        }
+
+
+
+
+
+
     }
 }

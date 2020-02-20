@@ -12,7 +12,31 @@ namespace senai.Filmes.WebApi.Repositories
     {
 
         private string connection = " DATA SOURCE = DEV21\\SQLEXPRESS;initial catalog=Filmes_manha; user Id=sa; pwd=sa@132";
-        private string conexao;
+        
+
+        public void Register(FilmeDomain filme)
+        {
+            using (SqlConnection conn = new SqlConnection(connection))
+            {
+
+                string queryInsert = "INSERT INTO Filmes (Titulo, IdGenero) VALUES (@Titulo , @IdGenero)";
+
+                
+                SqlCommand cmmd = new SqlCommand(queryInsert, conn);
+
+                
+                cmmd.Parameters.AddWithValue("@Titulo", filme.Titulo);
+                cmmd.Parameters.AddWithValue("@IdGenero", filme.IdGenero);
+
+                
+                conn.Open();
+
+                
+                cmmd.ExecuteNonQuery();
+
+            }
+
+        }
 
         public List<FilmeDomain> Listar()
         {
@@ -28,7 +52,7 @@ namespace senai.Filmes.WebApi.Repositories
 
                 SqlDataReader reader;
 
-                using(SqlCommand cmmd = new SqlCommand (queryVisuAll, conn))
+                using (SqlCommand cmmd = new SqlCommand(queryVisuAll, conn))
                 {
 
                     reader = cmmd.ExecuteReader();
@@ -43,7 +67,7 @@ namespace senai.Filmes.WebApi.Repositories
 
                             Titulo = reader["Titulo"].ToString(),
 
-                            
+
 
                         };
 
@@ -52,20 +76,15 @@ namespace senai.Filmes.WebApi.Repositories
 
                     return filmes;
 
-
-
                 }
 
-
-
             }
-
 
         }
 
         public FilmeDomain SearchbyId(int id)
         {
-            using (SqlConnection conn = new SqlConnection(conexao))
+            using (SqlConnection conn = new SqlConnection(connection))
             {
                 string querySearchById = "SELECT IdFilme, Titulo FROM Filmes WHERE IdFilme = @ID";
 
@@ -80,13 +99,13 @@ namespace senai.Filmes.WebApi.Repositories
 
                     reader = cmmd.ExecuteReader();
 
-                    
+
                     if (reader.Read())
                     {
-                        
+
                         FilmeDomain filme = new FilmeDomain
                         {
-                            
+
                             IdFilme = Convert.ToInt32(reader["IdFilme"]),
 
                             Titulo = reader["TiTulo"].ToString()
@@ -95,7 +114,7 @@ namespace senai.Filmes.WebApi.Repositories
                         return filme;
                     }
 
-                    
+
                     return null;
 
 
@@ -103,5 +122,48 @@ namespace senai.Filmes.WebApi.Repositories
 
             }
         }
+
+        public void UpdateUrl(int id, FilmeDomain filme)
+        {
+            using (SqlConnection conn = new SqlConnection(connection))
+            {
+                string queryUpdate = "UPDATE Filmes SET Titulo = @Titulo, IdGenero = @IdGenero WHERE IdFilme = @ID";
+
+                using (SqlCommand cmmd = new SqlCommand(queryUpdate, conn))
+                {
+
+                    cmmd.Parameters.AddWithValue("@Titulo", filme.Titulo);
+                    cmmd.Parameters.AddWithValue("@IdGenero", filme.IdGenero);
+                    cmmd.Parameters.AddWithValue("@ID", filme.IdFilme);
+
+                    conn.Open();
+
+                    cmmd.ExecuteNonQuery();
+
+                }
+
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(connection))
+            {
+                string queryDelete = "DELETE FROM Filmes WHERE IdFilme = @ID";
+
+                using (SqlCommand cmmd = new SqlCommand(queryDelete, conn))
+                {
+
+                    cmmd.Parameters.AddWithValue("@ID", id);
+
+                    conn.Open();
+
+                    cmmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+
     }
 }
